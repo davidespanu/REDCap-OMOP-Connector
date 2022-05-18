@@ -15,12 +15,22 @@ import kong.unirest.json.JSONObject;
 
 public class FileLogManager {
 	
-	static String path = "C:\\Users\\david\\Documents\\eclipseProjects\\ClientTest\\src\\main\\resources";
+//	static String path = "C:\\Users\\david\\Documents\\eclipseProjects\\ClientTest\\src\\main\\resources";	
+	static String file_name = "log.txt";
+	
+	public static String getAbsolutePath() {		
+		File file = new File("src/main/resources/"+file_name);
+		String absolutePath = file.getAbsolutePath();	
+		System.out.println("il path trovato è: "+ absolutePath);
+		return absolutePath;
+	}
+	
 	
 	public static void createFile() {
 		try {
-			  System.out.println(path);
-		      File myObj = new File(path+"\\log.txt");
+//			  System.out.println(path);
+//		      File myObj = new File(path+"\\log.txt");
+		      File myObj = new File(getAbsolutePath());
 		      if (myObj.createNewFile()) {
 		        System.out.println("File created: " + myObj.getName());
 		      } else {
@@ -36,7 +46,7 @@ public class FileLogManager {
 	public static void logBuilder(JSONArray array) {
 		createFile();
 		try {						
-			FileWriter myWriter = new FileWriter(path+"\\log.txt");
+			FileWriter myWriter = new FileWriter(getAbsolutePath());
 			myWriter.write("");
 			//TODO: write a function for building the log
 			myWriter.write(assembleLog(array).toString());
@@ -50,7 +60,7 @@ public class FileLogManager {
 	public static String readOldLog() {
 		try {
 			  String data = "";
-		      File myObj = new File(path+"\\log.txt");
+		      File myObj = new File(getAbsolutePath());
 		      Scanner myReader = new Scanner(myObj);
 		      while (myReader.hasNextLine()) {
 		        data = data.concat(myReader.nextLine());		        
