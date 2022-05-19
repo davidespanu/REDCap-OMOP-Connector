@@ -17,20 +17,20 @@ import kong.unirest.Unirest;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 import util.LookUpTableManager;
+import util.PropertiesFileManager;
 import util.ResourcesDatabaseSender;
 
 
 public class RedcapClient {
 
-	private  final String BASE_URL = "https://redcap-new.labmedinfo.org/api/";
-	private  final String TOKEN = "BB03160FFCA29BE016C8322F8721CC94";
 	
-	
-	
-	
+	public RedcapClient() {
+		PropertiesFileManager.init();
+	}
+
 	private HttpResponse<JsonNode> getRecords() {
-		return Unirest.post(BASE_URL)
-				.field("token",TOKEN)
+		return Unirest.post(PropertiesFileManager.getRedcapUrl())
+				.field("token",PropertiesFileManager.getToken())
 				.field("content", "record")
 				.field("format", "json")
 				.field("returnFormat", "json").asJson();
@@ -45,7 +45,8 @@ public class RedcapClient {
 	public HttpResponse<String> insertPatient(String patient) {
 		Unirest.shutDown();
 		Unirest.config().verifySsl(false);		
-		HttpResponse<String> response = Unirest.post("https://54.217.157.50:8443/dataplatform/fhir/Patient")
+		HttpResponse<String> response = Unirest.post(PropertiesFileManager.getPatientUrl())
+
 				  .header("Content-Type", "application/json")
 				  .header("Accept-Encoding", "application/json")
 				  .header("Authorization", "Basic Q0FTRU06R0lPUkQx")
@@ -59,8 +60,8 @@ public class RedcapClient {
 		Unirest.shutDown();
 		Unirest.config().verifySsl(false);
 		System.out.println(observation);
-		HttpResponse<String> response = Unirest.post("https://54.217.157.50:8443/dataplatform/fhir/Observation")
-				  .header("Content-Type", "application/json")
+		HttpResponse<String> response = Unirest.post(PropertiesFileManager.getObservation())
+				.header("Content-Type", "application/json")
 				  .header("Accept-Encoding", "application/json")
 				  .header("Authorization", "Basic Q0FTRU06R0lPUkQx")
 				  .body(observation)
@@ -74,22 +75,7 @@ public class RedcapClient {
 		Unirest.shutDown();
 		Unirest.config().verifySsl(false);
 		System.out.println(medication);
-		HttpResponse<String> response = Unirest.post("https://54.217.157.50:8443/dataplatform/fhir/MedicationRequest")
-				  .header("Content-Type", "application/json")
-				  .header("Accept-Encoding", "application/json")
-				  .header("Authorization", "Basic Q0FTRU06R0lPUkQx")
-				  .body(medication)
-				  .asString();
-		return response;
-	} 
-	
-
-	
-	public HttpResponse<String> insertMedicationAdm(String medication) {
-		Unirest.shutDown();
-		Unirest.config().verifySsl(false);
-		System.out.println(medication);
-		HttpResponse<String> response = Unirest.post("https://54.217.157.50:8443/dataplatform/fhir/MedicationAdministration")
+		HttpResponse<String> response = Unirest.post(PropertiesFileManager.getMedication())
 				  .header("Content-Type", "application/json")
 				  .header("Accept-Encoding", "application/json")
 				  .header("Authorization", "Basic Q0FTRU06R0lPUkQx")

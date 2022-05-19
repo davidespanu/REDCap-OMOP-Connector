@@ -14,8 +14,7 @@ import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 
 public class FileLogManager {
-	
-//	static String path = "C:\\Users\\david\\Documents\\eclipseProjects\\ClientTest\\src\\main\\resources";	
+
 	static String file_name = "log.txt";
 	
 	public static String getAbsolutePath() {		

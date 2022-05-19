@@ -22,6 +22,7 @@ import kong.unirest.json.JSONObject;
 import util.ExcelParser;
 import util.FileLogManager;
 import util.LookUpTableManager;
+import util.PropertiesFileManager;
 import util.ResourcesDatabaseSender;
 
 
@@ -253,7 +254,7 @@ public class Test {
 //		List<DomainResource> resources = builder.getAllResources();
 //		System.out.println(resources.size());		
 
-		rc.insert();
+		rc.insert(); // ***********************************************************************************************
 		
 // TEST DEL LOG -----------------------------------------------------------------------------------------------------------------		
 
