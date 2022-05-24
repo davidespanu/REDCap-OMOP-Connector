@@ -229,15 +229,6 @@ public class ObservationBuilder extends BaseBuilder {
 		return jarray;
 	}
 	
-	// this method will be called up
-//	private static List<Observation> builtObservationsRadiotherapy(JSONArray array,String line_terapy, String id){
-//		JSONArray jarray = getRadiotherapyInstances(array,line_terapy,id);
-//		List<Observation> listOb= new ArrayList<Observation>();
-//		for(int i = 0; i < jarray.length(); i++) {
-//			listOb.add(buildObservarionRadiotherapy(jarray.getJSONObject(i),id));
-//		}
-//		return listOb;
-//	}
 	
 	//this function will call up
 	private static List<Observation> builtObservationsRadiotherapy(JSONArray array,String line_terapy, String id){
@@ -671,15 +662,8 @@ public class ObservationBuilder extends BaseBuilder {
 				c3.setDisplay("Thermo ablation");	
 				liscConcept.add(codeableConcept_3);
 			}
-//			if(resourceJson.getString("local_treatment_type___4").equals("1")) {
-//				CodeableConcept codeableConcept_4 = new CodeableConcept();
-//				Coding c4 = codeableConcept_4.addCoding();
-//				c4.setCode("11110000");
-//				c4.setSystem(SYSTEM_SNOMED);
-//				c4.setDisplay("Other");	
-//				liscConcept.add(codeableConcept_4);
-//			}
-		
+
+			
 		return liscConcept;
 	}
 	

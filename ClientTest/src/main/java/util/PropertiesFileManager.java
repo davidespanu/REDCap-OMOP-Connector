@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class PropertiesFileManager {
 	
-	static String file_name = "config.properties";
+	static final String FILE_NAME = "config.properties";
 	static Properties properties; 
 	
 
@@ -25,7 +25,7 @@ public class PropertiesFileManager {
 	
 	// this get the absolute path of the properties file
 	public static File getFileProperties() {		
-		File file = new File("src/main/resources/"+file_name);
+		File file = new File("src/main/resources/"+FILE_NAME);
 		return file;
 	}
 	
@@ -57,5 +57,24 @@ public class PropertiesFileManager {
 		return properties.getProperty("omop.medication");
 	}
 
-	
+	public static String getPatientRecordId() {
+		return properties.getProperty("record_id");
+	}
+
+	public static String getPatientId() {
+		return properties.getProperty("id");
+	}
+
+	public static String getPatientGender() {
+		return properties.getProperty("gender");
+	}
+
+	public static String getPatientDob() {
+		return properties.getProperty("data_of_birth");
+	}
+
+	public static String getPatientStatus() {
+		return properties.getProperty("status");
+	}
+
 }

@@ -9,6 +9,7 @@ import org.hl7.fhir.r4.model.Observation;
 import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Reference;
 
+import builders.PatientBuilder;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import kong.unirest.HttpResponse;
@@ -26,6 +27,7 @@ public class RedcapClient {
 	
 	public RedcapClient() {
 		PropertiesFileManager.init();
+		PatientBuilder.initParams();
 	}
 
 	private HttpResponse<JsonNode> getRecords() {
@@ -40,7 +42,7 @@ public class RedcapClient {
 		return getRecords().getBody().getArray();
 	}
 	
-//-------------------------------------------------------------------------
+	//-------------------------------------------------------------------------
 	// insert to database
 	public HttpResponse<String> insertPatient(String patient) {
 		Unirest.shutDown();
@@ -154,7 +156,6 @@ public class RedcapClient {
 	
 	
 	//----------------------------------------------------------------------------------------------------------------------------------
-	
 
 
 }

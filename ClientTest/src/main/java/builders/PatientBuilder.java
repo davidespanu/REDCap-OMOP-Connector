@@ -9,15 +9,23 @@ import org.hl7.fhir.r4.model.Patient;
 
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
+import util.PropertiesFileManager;
 
 public class PatientBuilder extends BaseBuilder {
 	
-	private static final String RECORD_ID = "record_id";
-	private static final String ID = "id";
-	private static final String GENDER = "gender";
-	private static final String DATA_OF_BIRTH = "dob";
-	private static final String STATUS = "status";
+	private static  String RECORD_ID;
+	private static  String ID;
+	private static  String GENDER;
+	private static  String DATA_OF_BIRTH;
+	private static  String STATUS;
 	
+	public static void initParams() {
+		RECORD_ID = PropertiesFileManager.getPatientRecordId();
+		ID = PropertiesFileManager.getPatientId();
+		GENDER = PropertiesFileManager.getPatientGender();
+		DATA_OF_BIRTH = PropertiesFileManager.getPatientDob();
+		STATUS = PropertiesFileManager.getPatientStatus();
+	}
 	
 	
 	public static Patient getPatientbyId(JSONArray array,String id) {
@@ -53,7 +61,6 @@ public class PatientBuilder extends BaseBuilder {
 				}
 			}
 			if(resourceJson.has(DATA_OF_BIRTH)) {
-				// yyyy-mm-dd
 				if(resourceJson.getString(DATA_OF_BIRTH).equals("")) {
 					
 				}else {					
