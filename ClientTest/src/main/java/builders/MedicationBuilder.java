@@ -16,25 +16,26 @@ import org.hl7.fhir.r4.model.Reference;
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 import util.ExcelParser;
+import util.PropertiesFileManager;
 
 public class MedicationBuilder extends BaseBuilder{
 	
-	private static final String LINE_THERAPY_DRUG = "line_therapy_drug";
-	public static final String LINE_THERAPY_CLASSIFIED_1 = "line_therapy_drug_1";
-	public static final String LINE_THERAPY_CLASSIFIED_2 = "line_therapy_drug_2";
-	public static final String LINE_THERAPY_CLASSIFIED_3 = "line_therapy_drug_3";
-	private static final String LINE_THERAPY_START_DATE = "line_therapy_start_date";
 	private static final String SYSTEM_RXNORM = "http://www.nlm.nih.gov/research/umls/rxnorm";
 	private static final String SYSTEM_SNOMED = "http://snomed.info/sct";
-	public static String[] lineDrugTheraphy = {LINE_THERAPY_CLASSIFIED_1,LINE_THERAPY_CLASSIFIED_2,LINE_THERAPY_CLASSIFIED_3};
+	private static String LINE_THERAPY_START_DATE;
+	public static String[] lineDrugTheraphy;
+	
+	public static void init() {
+		lineDrugTheraphy = PropertiesFileManager.getTherapyDrug();
+		LINE_THERAPY_START_DATE = PropertiesFileManager.getTherapyStartDate();
+	}
+	
 	
 	public static List<MedicationRequest> getMedicationRequestfromPatient(JSONArray array,String line_terapy,String id,String LineTherapyClass) {
-//		JSONObject recordJson = linearSearch(array,id);
 		return builtMadicationRequestListTherapyStart(array,line_terapy,id,LineTherapyClass);		
 	}
 	
 	public static List<MedicationAdministration> getMedicationAdministrationfromPatient(JSONArray array,String line_terapy,String id,String LineTherapyClass) {
-//		JSONObject recordJson = linearSearch(array,id);
 		return builtMadicationAdministationListTherapyStart(array,line_terapy,id,LineTherapyClass);		
 	}
 	

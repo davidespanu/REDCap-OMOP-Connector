@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -77,4 +79,19 @@ public class PropertiesFileManager {
 		return properties.getProperty("status");
 	}
 
+	public static String[] getTherapyDrug(){
+		String line_therapy_drug = properties.getProperty("line_therapy_drug");
+		String[] line_therapy = line_therapy_drug.split(",");
+		return line_therapy;		
+	}
+	
+	public static String getTherapyStartDate() {
+		return properties.getProperty("line_therapy_start_date");
+	}
 }
+
+
+
+
+
+

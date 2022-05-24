@@ -40,36 +40,36 @@ public class Test {
 //				ObservationBuilder.WEIGTH).size());
 		
 		// these are by identifier -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-		Patient patient = PatientBuilder.getPatientbyId(rc.getRecordsJson(),"1");	
-		String identifier = patient.getIdentifierFirstRep().getValue();
-		
-
-		// this is for nephrectomy
-		Observation observation =  ObservationBuilder.getObservationPatient(rc.getRecordsJson(),"1");
-		
-		
-		List<Observation> observationTherapyStart =  ObservationBuilder.getObservationTerapyStart(rc.getRecordsJson(),"1",ObservationBuilder.FIRST_LINE_TERAPY, 
-																						ObservationBuilder.WEIGTH);
-//		System.out.println(observationTherapyStart.size());
-		
-		List<MedicationRequest> medicationR = MedicationBuilder.getMedicationRequestfromPatient(rc.getRecordsJson(),ObservationBuilder.FIRST_LINE_TERAPY,"1",
-																							MedicationBuilder.LINE_THERAPY_CLASSIFIED_1);
-		
-		List<MedicationAdministration> medicationA  = MedicationBuilder.getMedicationAdministrationfromPatient(rc.getRecordsJson(),ObservationBuilder.FIRST_LINE_TERAPY,"1"
-																							,MedicationBuilder.LINE_THERAPY_CLASSIFIED_1);
-		
-		List<Observation> observationRadiotherapy = ObservationBuilder.getObservationRadiotherapy(rc.getRecordsJson(),"1",
-																							ObservationBuilder.FIRST_LINE_TERAPY);
-		List<Observation> observationOtherSurgery = ObservationBuilder.getObservationOtherSurgery(rc.getRecordsJson(),"1",
-																							ObservationBuilder.FIRST_LINE_TERAPY);
-		List<Observation> observationOtherLocalTreatemet = ObservationBuilder.getObservationOtherLocalTreatement(rc.getRecordsJson(),"1",
-																							ObservationBuilder.FIRST_LINE_TERAPY);
-		List<Observation> ObservatioThumorCaratteristics =  ObservationBuilder.getObservationThumorCaratteristics(rc.getRecordsJson(),"1",
-				ObservationBuilder.tumorCharatteristics[0]);
-
-		
-		List<Observation> ObservatioBrainMets =  ObservationBuilder.getObservationBrainMets(rc.getRecordsJson(),"1",ObservationBuilder.FIRST_LINE_TERAPY,
-				ObservationBuilder.brainMets[0]);
+//		Patient patient = PatientBuilder.getPatientbyId(rc.getRecordsJson(),"1");	
+//		String identifier = patient.getIdentifierFirstRep().getValue();
+//		
+//
+//		// this is for nephrectomy
+//		Observation observation =  ObservationBuilder.getObservationPatient(rc.getRecordsJson(),"1");
+//		
+//		
+//		List<Observation> observationTherapyStart =  ObservationBuilder.getObservationTerapyStart(rc.getRecordsJson(),"1",ObservationBuilder.FIRST_LINE_TERAPY, 
+//																						ObservationBuilder.WEIGTH);
+////		System.out.println(observationTherapyStart.size());
+//		
+//		List<MedicationRequest> medicationR = MedicationBuilder.getMedicationRequestfromPatient(rc.getRecordsJson(),ObservationBuilder.FIRST_LINE_TERAPY,"1",
+//																							MedicationBuilder.LINE_THERAPY_CLASSIFIED_1);
+//		
+//		List<MedicationAdministration> medicationA  = MedicationBuilder.getMedicationAdministrationfromPatient(rc.getRecordsJson(),ObservationBuilder.FIRST_LINE_TERAPY,"1"
+//																							,MedicationBuilder.LINE_THERAPY_CLASSIFIED_1);
+//		
+//		List<Observation> observationRadiotherapy = ObservationBuilder.getObservationRadiotherapy(rc.getRecordsJson(),"1",
+//																							ObservationBuilder.FIRST_LINE_TERAPY);
+//		List<Observation> observationOtherSurgery = ObservationBuilder.getObservationOtherSurgery(rc.getRecordsJson(),"1",
+//																							ObservationBuilder.FIRST_LINE_TERAPY);
+//		List<Observation> observationOtherLocalTreatemet = ObservationBuilder.getObservationOtherLocalTreatement(rc.getRecordsJson(),"1",
+//																							ObservationBuilder.FIRST_LINE_TERAPY);
+//		List<Observation> ObservatioThumorCaratteristics =  ObservationBuilder.getObservationThumorCaratteristics(rc.getRecordsJson(),"1",
+//				ObservationBuilder.tumorCharatteristics[0]);
+//
+//		
+//		List<Observation> ObservatioBrainMets =  ObservationBuilder.getObservationBrainMets(rc.getRecordsJson(),"1",ObservationBuilder.FIRST_LINE_TERAPY,
+//				ObservationBuilder.brainMets[0]);
 
 		
 		//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
