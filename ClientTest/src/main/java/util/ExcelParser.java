@@ -31,24 +31,24 @@ public class ExcelParser  {
 		}		
 	}
 	
-	public static HashMap<String,String[]> getMedicationsCode(){
-		getFile();
-		HashMap<String,String[]> medicationsCode = new HashMap<String,String[]>();
-		XSSFSheet mySheet = myWorkBook.getSheetAt(0);
-		for (Iterator iterator = mySheet.rowIterator(); iterator.hasNext();) {
-		    XSSFRow row = (XSSFRow) iterator.next();
-		    Double value =row.getCell(2).getNumericCellValue();
-		    int value_int = value.intValue();
-		    String value_string = Integer.toString(value_int);
-		    String name =row.getCell(3).getStringCellValue();
-		    String[] code_name = {value_string,name};
-		    Double contol = row.getCell(0).getNumericCellValue();
-		    int control_int = contol.intValue();
-		    String control_string = Integer.toString(control_int);
-		    medicationsCode.put(control_string, code_name);  		    
-		}		
-		return medicationsCode;
-	}
+//	public static HashMap<String,String[]> getMedicationsCode(){
+//		getFile();
+//		HashMap<String,String[]> medicationsCode = new HashMap<String,String[]>();
+//		XSSFSheet mySheet = myWorkBook.getSheetAt(0);
+//		for (Iterator iterator = mySheet.rowIterator(); iterator.hasNext();) {
+//		    XSSFRow row = (XSSFRow) iterator.next();
+//		    Double value =row.getCell(2).getNumericCellValue();
+//		    int value_int = value.intValue();
+//		    String value_string = Integer.toString(value_int);
+//		    String name =row.getCell(3).getStringCellValue();
+//		    String[] code_name = {value_string,name};
+//		    Double contol = row.getCell(0).getNumericCellValue();
+//		    int control_int = contol.intValue();
+//		    String control_string = Integer.toString(control_int);
+//		    medicationsCode.put(control_string, code_name);  		    
+//		}		
+//		return medicationsCode;
+//	}
 	
 //---------------------------------------------------------------------------------------------------	
 	

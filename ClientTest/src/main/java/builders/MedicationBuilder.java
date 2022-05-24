@@ -2,6 +2,7 @@ package builders;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -24,10 +25,12 @@ public class MedicationBuilder extends BaseBuilder{
 	private static final String SYSTEM_SNOMED = "http://snomed.info/sct";
 	private static String LINE_THERAPY_START_DATE;
 	public static String[] lineDrugTheraphy;
+	public static HashMap<String,String[]> drugs;
 	
 	public static void init() {
 		lineDrugTheraphy = PropertiesFileManager.getTherapyDrug();
 		LINE_THERAPY_START_DATE = PropertiesFileManager.getTherapyStartDate();
+		drugs = PropertiesFileManager.getMedicationsCode();
 	}
 	
 	
@@ -81,9 +84,9 @@ public class MedicationBuilder extends BaseBuilder{
 			String drug = resourceJson.getString(LineTherapyClass);
 //			for(int i = 0; i < drugs.length ; i++) {				
 			Coding coding = medicationRequest.getMedicationCodeableConcept().addCoding();
-			coding.setCode(ExcelParser.getMedicationsCode().get(drug)[0]);//TODO: add new code for drugs in file excel
+			coding.setCode(drugs.get(drug)[0]);//TODO: add new code for drugs in file excel
 			coding.setSystem(SYSTEM_RXNORM);
-			coding.setDisplay(ExcelParser.getMedicationsCode().get(drug)[1]);				
+			coding.setDisplay(drugs.get(drug)[1]);				
 //			}
 		}else {
 			return null;
@@ -149,9 +152,9 @@ public class MedicationBuilder extends BaseBuilder{
 //			String[] drugs = (resourceJson.getString(LINE_THERAPY_DRUG)).split(Pattern.quote("+"));
 //			for(int i = 0; i < drugs.length ; i++) {				
 			Coding coding = medicationAdministration.getMedicationCodeableConcept().addCoding();
-			coding.setCode(ExcelParser.getMedicationsCode().get(drug)[0]);
+			coding.setCode(drugs.get(drug)[0]);
 			coding.setSystem(SYSTEM_RXNORM);
-			coding.setDisplay(ExcelParser.getMedicationsCode().get(drug)[1]);				
+			coding.setDisplay(drugs.get(drug)[1]);				
 //			}
 		}else {
 			return null;

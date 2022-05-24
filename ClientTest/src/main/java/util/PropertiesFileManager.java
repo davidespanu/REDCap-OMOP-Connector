@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -87,6 +88,19 @@ public class PropertiesFileManager {
 	
 	public static String getTherapyStartDate() {
 		return properties.getProperty("line_therapy_start_date");
+	}
+	
+	public static HashMap<String,String[]> getMedicationsCode(){
+		HashMap<String,String[]> medicationsCode = new HashMap<String,String[]>();
+		String drugs_not_parsed = properties.getProperty("drugs");
+		String[] drugs_not_parsed_yet = drugs_not_parsed.split(",");
+		for(int i = 0; i<drugs_not_parsed_yet.length; i++) {
+			String[] drug_parsed = drugs_not_parsed_yet[i].split(":");
+			String control = drug_parsed[0];
+			String[] code_name = {drug_parsed[1],drug_parsed[2]};
+			medicationsCode.put(control, code_name);
+		}
+		return medicationsCode;
 	}
 }
 
