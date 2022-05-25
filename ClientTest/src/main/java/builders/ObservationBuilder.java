@@ -16,7 +16,7 @@ import org.hl7.fhir.r4.model.codesystems.ObservationStatisticsEnumFactory;
 
 import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
-import util.ExcelParser;
+import util.PropertiesFileManager;
 
 public class ObservationBuilder extends BaseBuilder {
 
@@ -184,7 +184,7 @@ public class ObservationBuilder extends BaseBuilder {
 		observation.setStatus(observation.getStatus().fromCode("final"));
 
 		Coding coding = observation.getCode().addCoding();
-		coding.setCode(ExcelParser.getObservationsCode().get(typeObservation)[0]);
+		coding.setCode(PropertiesFileManager.getObservationCode().get(typeObservation)[0]);
 		System.out.println();
 //		if((typeObservation.equals(CREATININE)) || (typeObservation.equals(HEMOGLOBIN))) {
 //			coding.setSystem(SYSTEM_CPT4);
@@ -206,7 +206,7 @@ public class ObservationBuilder extends BaseBuilder {
 		}
 		
 		Quantity quantity = observation.getValueQuantity();
-		quantity.setCode(ExcelParser.getObservationsCode().get(typeObservation)[1]);
+		quantity.setCode(PropertiesFileManager.getObservationCode().get(typeObservation)[1]);
 		if(!(resourceJson.getString(typeObservation).equals(""))) {
 		quantity.setValue(Double.parseDouble(resourceJson.getString(typeObservation)));
 		}		
@@ -416,28 +416,28 @@ public class ObservationBuilder extends BaseBuilder {
 			if(resourceJson.getString("target_organ___1").equals("1")) {
 				CodeableConcept codeableConcept_1 = new CodeableConcept();
 				Coding c1 = codeableConcept_1.addCoding();
-				c1.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___1")[0]);
+				c1.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___1")[0]);
 				c1.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_1);
 			}
 			if(resourceJson.getString("target_organ___2").equals("1")) {
 				CodeableConcept codeableConcept_2 = new CodeableConcept();
 				Coding c2 = codeableConcept_2.addCoding();
-				c2.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___2")[0]);
+				c2.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___2")[0]);
 				c2.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_2);
 			}
 			if(resourceJson.getString("target_organ___3").equals("1")) {
 				CodeableConcept codeableConcept_3 = new CodeableConcept();
 				Coding c3 = codeableConcept_3.addCoding();
-				c3.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___3")[0]);
+				c3.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___3")[0]);
 				c3.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_3);
 			}
 			if(resourceJson.getString("target_organ___4").equals("1")) {
 				CodeableConcept codeableConcept_4 = new CodeableConcept();
 				Coding c4 = codeableConcept_4.addCoding();
-				c4.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___4")[0]);
+				c4.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___4")[0]);
 				c4.setSystem(SYSTEM_SNOMED);
 				
 				liscConcept.add(codeableConcept_4);
@@ -445,49 +445,49 @@ public class ObservationBuilder extends BaseBuilder {
 			if(resourceJson.getString("target_organ___5").equals("1")) {
 				CodeableConcept codeableConcept_5 = new CodeableConcept();
 				Coding c5 = codeableConcept_5.addCoding();
-				c5.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___5")[0]);
+				c5.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___5")[0]);
 				c5.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_5);
 			}
 			if(resourceJson.getString("target_organ___6").equals("1")) {
 				CodeableConcept codeableConcept_6 = new CodeableConcept();
 				Coding c6 = codeableConcept_6.addCoding();
-				c6.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___6")[0]);
+				c6.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___6")[0]);
 				c6.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_6);
 			}
 			if(resourceJson.getString("target_organ___7").equals("1")) {
 				CodeableConcept codeableConcept_7 = new CodeableConcept();
 				Coding c7 = codeableConcept_7.addCoding();
-				c7.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___7")[0]);
+				c7.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___7")[0]);
 				c7.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_7);
 			}
 			if(resourceJson.getString("target_organ___8").equals("1")) {
 				CodeableConcept codeableConcept_8 = new CodeableConcept();
 				Coding c8 = codeableConcept_8.addCoding();
-				c8.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___8")[0]);
+				c8.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___8")[0]);
 				c8.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_8);
 			}
 			if(resourceJson.getString("target_organ___9").equals("1")) {
 				CodeableConcept codeableConcept_9 = new CodeableConcept();
 				Coding c9 = codeableConcept_9.addCoding();
-				c9.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___9")[0]);
+				c9.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___9")[0]);
 				c9.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_9);
 			}
 			if(resourceJson.getString("target_organ___10").equals("1")) {
 				CodeableConcept codeableConcept_10 = new CodeableConcept();
 				Coding c10 = codeableConcept_10.addCoding();
-				c10.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___10")[0]);
+				c10.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___10")[0]);
 				c10.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_10);
 			}
 			if(resourceJson.getString("target_organ___11").equals("1")) {
 				CodeableConcept codeableConcept_11 = new CodeableConcept();
 				Coding c11 = codeableConcept_11.addCoding();
-				c11.setCode(ExcelParser.getOtherSurgeryCode().get("target_organ___11")[0]);
+				c11.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___11")[0]);
 				c11.setSystem(SYSTEM_SNOMED);				
 				liscConcept.add(codeableConcept_11);
 			}
@@ -567,28 +567,28 @@ public class ObservationBuilder extends BaseBuilder {
 		if(resourceJson.getString("target_organ_local_tr___1").equals("1")) {
 			CodeableConcept codeableConcept_1 = new CodeableConcept();
 			Coding c1 = codeableConcept_1.addCoding();
-			c1.setCode(ExcelParser.getOtherLocalTreatemetCode().get("target_organ_local_tr___1")[0]);
+			c1.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___1")[0]);
 			c1.setSystem(SYSTEM_SNOMED);				
 			liscConcept.add(codeableConcept_1);
 		}
 		if(resourceJson.getString("target_organ_local_tr___2").equals("1")) {
 			CodeableConcept codeableConcept_2 = new CodeableConcept();
 			Coding c2 = codeableConcept_2.addCoding();
-			c2.setCode(ExcelParser.getOtherLocalTreatemetCode().get("target_organ_local_tr___2")[0]);
+			c2.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___2")[0]);
 			c2.setSystem(SYSTEM_SNOMED);				
 			liscConcept.add(codeableConcept_2);
 		}
 		if(resourceJson.getString("target_organ_local_tr___3").equals("1")) {
 			CodeableConcept codeableConcept_3 = new CodeableConcept();
 			Coding c3 = codeableConcept_3.addCoding();
-			c3.setCode(ExcelParser.getOtherLocalTreatemetCode().get("target_organ_local_tr___3")[0]);
+			c3.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___3")[0]);
 			c3.setSystem(SYSTEM_SNOMED);				
 			liscConcept.add(codeableConcept_3);
 		}
 		if(resourceJson.getString("target_organ_local_tr___5").equals("1")) {
 			CodeableConcept codeableConcept_4 = new CodeableConcept();
 			Coding c4 = codeableConcept_4.addCoding();
-			c4.setCode(ExcelParser.getOtherLocalTreatemetCode().get("target_organ_local_tr___5")[0]);
+			c4.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___5")[0]);
 			c4.setSystem(SYSTEM_SNOMED);
 			
 			liscConcept.add(codeableConcept_4);
@@ -596,35 +596,35 @@ public class ObservationBuilder extends BaseBuilder {
 		if(resourceJson.getString("target_organ_local_tr___6").equals("1")) {
 			CodeableConcept codeableConcept_5 = new CodeableConcept();
 			Coding c5 = codeableConcept_5.addCoding();
-			c5.setCode(ExcelParser.getOtherLocalTreatemetCode().get("target_organ_local_tr___6")[0]);
+			c5.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___6")[0]);
 			c5.setSystem(SYSTEM_SNOMED);				
 			liscConcept.add(codeableConcept_5);
 		}
 		if(resourceJson.getString("target_organ_local_tr___7").equals("1")) {
 			CodeableConcept codeableConcept_6 = new CodeableConcept();
 			Coding c6 = codeableConcept_6.addCoding();
-			c6.setCode(ExcelParser.getOtherLocalTreatemetCode().get("target_organ_local_tr___7")[0]);
+			c6.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___7")[0]);
 			c6.setSystem(SYSTEM_SNOMED);				
 			liscConcept.add(codeableConcept_6);
 		}
 		if(resourceJson.getString("target_organ_local_tr___8").equals("1")) {
 			CodeableConcept codeableConcept_7 = new CodeableConcept();
 			Coding c7 = codeableConcept_7.addCoding();
-			c7.setCode(ExcelParser.getOtherLocalTreatemetCode().get("target_organ_local_tr___8")[0]);
+			c7.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___8")[0]);
 			c7.setSystem(SYSTEM_SNOMED);				
 			liscConcept.add(codeableConcept_7);
 		}
 		if(resourceJson.getString("target_organ_local_tr___10").equals("1")) {
 			CodeableConcept codeableConcept_8 = new CodeableConcept();
 			Coding c8 = codeableConcept_8.addCoding();
-			c8.setCode(ExcelParser.getOtherLocalTreatemetCode().get("target_organ_local_tr___10")[0]);
+			c8.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___10")[0]);
 			c8.setSystem(SYSTEM_SNOMED);				
 			liscConcept.add(codeableConcept_8);
 		}
 		if(resourceJson.getString("target_organ_local_tr___11").equals("1")) {
 			CodeableConcept codeableConcept_9 = new CodeableConcept();
 			Coding c9 = codeableConcept_9.addCoding();
-			c9.setCode(ExcelParser.getOtherLocalTreatemetCode().get("target_organ_local_tr___11")[0]);
+			c9.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___11")[0]);
 			c9.setSystem(SYSTEM_SNOMED);				
 			liscConcept.add(codeableConcept_9);
 		}
