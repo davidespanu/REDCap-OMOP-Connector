@@ -22,53 +22,24 @@ public class ObservationBuilder extends BaseBuilder {
 
 	public static final String NEPHRECTOMY = "nephrectomy";
 	private static final String NEPHRECTOMY_TYPE = "nephrectomy_type";
-	private static final String NEPHRECTOMY_SITE = "nephrectomy_site"; 
 	private static final String PARTIAL_NEPHRECTOMY_CODE = "81516001";
 	private static final String RADICA_NEPHRECTOMY_CODE = "116033007";
-	private static final String SIMPLE_NEPHRECTOMY_CODE = "175909009";
 	private static final String SYSTEM_SNOMED = "http://snomed.info/sct";
-	private static final String SYSTEM_CPT4 = "http://www.ama-assn.org/go/cpt";
 	private static final String SYSTEM_MEASURE = "http://unitsofmeasure.org";
-	public static final String WEIGTH = "weight";
-	public static final String HEMOGLOBIN = "hemoglobin";
-	public static final String CORRCA = "corrca";
-	public static final String LDH = "ldh";
-	public static final String NEUTROPHIL = "neutrophil_absolute_count";
-	public static final String LIMPHOCYTE = "lymphocyte_absolute_count";
-	public static final String PLATELET = "platelet_count";
-	public static final String KARNOFSKY = "karnofsky_performace_kps";
-	public static final String SODIUM = "na_serum_sodium";
-	public static final String CREATININE = "creatinine";
-	public static final String FIRST_LINE_TERAPY = "first_line_therapy_arm_1";
 	private static final String RADIOTHERAPY_IDENTIFIER = "Internal EHR SerialCode";
-	public static String[] dataOfTherapy = {WEIGTH,HEMOGLOBIN,CORRCA,LDH,NEUTROPHIL,LIMPHOCYTE,PLATELET,KARNOFSKY,SODIUM,CREATININE};
-	public static String[] tumorCharatteristics = {"ccrcc","paprcc","chrrcc","unclassified_rcc","collect_duct","xp_translocation","sarcomotoid"};
-	public static String[] brainMets = {"cerebral_met_supratentoria","cerebellar_area_infratento","encephalic_trunk_metastasi",
-			"symptoms_at_presentation","xrt_for_brain_mets","stereotactic_radiosurgery","neurosurgery_brain_met"};
-	
-	
+	public static String[] dataOfTherapy;
+	public static String[] tumorCharatteristics;
+	public static String[] brainMets; 
 	public static Map<String,String> tumorCharattCode;
-	static {
-		tumorCharattCode = new HashMap<String, String>();  //TODO: find the right codes
-		tumorCharattCode.put("ccrcc", "254915003");
-		tumorCharattCode.put("paprcc", "733608000");
-		tumorCharattCode.put("chrrcc", "733471003");
-		tumorCharattCode.put("unclassified_rcc", "702391001");
-		tumorCharattCode.put("collect_duct","128669006");
-		tumorCharattCode.put("xp_translocation", "733881007");
-		tumorCharattCode.put("sarcomotoid", "399477001");
-	}
-	
 	public static Map<String,String> brainMetsCode;
-	static {
-		brainMetsCode = new HashMap<String, String>();
-		brainMetsCode.put("cerebral_met_supratentoria", "188464000");
-		brainMetsCode.put("cerebellar_area_infratento", "449420002");
-		brainMetsCode.put("encephalic_trunk_metastasi", "1090311000000101");
-		brainMetsCode.put("symptoms_at_presentation", "139079008");
-		brainMetsCode.put("xrt_for_brain_mets", "454541000124108");
-		brainMetsCode.put("stereotactic_radiosurgery", "115959002");
-		brainMetsCode.put("neurosurgery_brain_met", "394610002");
+	
+	
+	public static void init() {
+		dataOfTherapy = PropertiesFileManager.getTherapyStartData();
+		tumorCharatteristics=PropertiesFileManager.getTumorCharatteristicsList();
+		brainMets = PropertiesFileManager.getBrainMetsList();
+		tumorCharattCode = PropertiesFileManager.getTumorCharatteristicsMap();
+		brainMetsCode = PropertiesFileManager.getBrainMetsListMap();
 	}
 	
 	
@@ -76,10 +47,7 @@ public class ObservationBuilder extends BaseBuilder {
 	
 	public static Observation getObservationPatient(JSONArray array,String id) { //String type
 		JSONObject recordJson = linearSearch(array,id);
-//		if(type.equals(NEPHRECTOMY)) {
 			return buildObservationNephrectomy(recordJson,id);
-//		}
-//		return buildObservationsTerapyStart(recordJson,id,type); // TODO: it depend from line_terapy! should be different	 
 	}
 	
 	public static List<Observation> getObservationTerapyStart(JSONArray array, String id,String line_terapy,String typeObservation){
@@ -186,11 +154,7 @@ public class ObservationBuilder extends BaseBuilder {
 		Coding coding = observation.getCode().addCoding();
 		coding.setCode(PropertiesFileManager.getObservationCode().get(typeObservation)[0]);
 		System.out.println();
-//		if((typeObservation.equals(CREATININE)) || (typeObservation.equals(HEMOGLOBIN))) {
-//			coding.setSystem(SYSTEM_CPT4);
-//		}else {
 		coding.setSystem(SYSTEM_SNOMED);
-//		}		
 		
 		coding.setDisplay(typeObservation);
 		

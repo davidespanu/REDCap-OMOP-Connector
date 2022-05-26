@@ -143,6 +143,58 @@ public class PropertiesFileManager {
 	}
 
 
+	public static String[] getTherapyStartData(){
+		String observations_not_parsed = properties.getProperty("therapystartobservations");
+		return observations_not_parsed.split(",");
+	}
+	
+	public static String[] getTumorCharatteristicsList(){
+		String observations_not_parsed = properties.getProperty("tumorcharatteristics");
+		String[] s = observations_not_parsed.split(",");
+		String[] new_s = new String[s.length];
+		for(int i = 0; i<new_s.length; i++) {
+			String[] name_code = s[i].split(":");
+			new_s[i]=name_code[0];
+		}
+		return new_s;
+	}
+
+	public static HashMap<String,String> getTumorCharatteristicsMap(){
+		String observations_not_parsed = properties.getProperty("tumorcharatteristics");
+		HashMap<String,String> tumorCharacteristicCode = new HashMap<String,String>();
+		String[] s = observations_not_parsed.split(",");
+		for(int i = 0;i<s.length;i++) {
+			String[] name_code = s[i].split(":");
+			tumorCharacteristicCode.put(name_code[0], name_code[1]);
+		}
+		return tumorCharacteristicCode;
+	}
+		
+	
+	
+	public static String[] getBrainMetsList(){
+		String observations_not_parsed = properties.getProperty("observationbrainmets");
+		String[] s = observations_not_parsed.split(",");
+		String[] new_s = new String[s.length];
+		for(int i = 0; i<new_s.length; i++) {
+			String[] name_code = s[i].split(":");
+			new_s[i]=name_code[0];
+		}
+		return new_s;
+	}
+
+	public static HashMap<String,String> getBrainMetsListMap(){
+		String observations_not_parsed = properties.getProperty("observationbrainmets");
+		HashMap<String,String> tumorCharacteristicCode = new HashMap<String,String>();
+		String[] s = observations_not_parsed.split(",");
+		for(int i = 0;i<s.length;i++) {
+			String[] name_code = s[i].split(":");
+			tumorCharacteristicCode.put(name_code[0], name_code[1]);
+		}
+		return tumorCharacteristicCode;
+	}
+
+	
 }
 
 

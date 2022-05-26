@@ -10,6 +10,7 @@ import org.hl7.fhir.r4.model.Patient;
 import org.hl7.fhir.r4.model.Reference;
 
 import builders.MedicationBuilder;
+import builders.ObservationBuilder;
 import builders.PatientBuilder;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
@@ -30,6 +31,7 @@ public class RedcapClient {
 		PropertiesFileManager.init();
 		PatientBuilder.initParams();
 		MedicationBuilder.init();
+		ObservationBuilder.init();
 	}
 
 	private HttpResponse<JsonNode> getRecords() {
