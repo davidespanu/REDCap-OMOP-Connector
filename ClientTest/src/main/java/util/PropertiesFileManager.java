@@ -194,7 +194,38 @@ public class PropertiesFileManager {
 		return tumorCharacteristicCode;
 	}
 
-	
+	public static String getPartialNephrectomyCode() {
+		return properties.getProperty("partial_nephrectomy_code");
+	}
+
+	public static String getRadicalNephrctomyCode() {
+		return properties.getProperty("radical_nephrecotmy_code");
+	}
+
+	public static String getRadicalNephrctomy() {
+		return properties.getProperty("neherctomy");
+	}
+
+	public static String getRadicalNephrctomyType() {
+		return properties.getProperty("nephrectomy_type");
+	}
+
+	public static String snomedCode() {
+		return properties.getProperty("system_snomed");
+	}
+
+	public static String snomedMeasure() {
+		return properties.getProperty("system_measure");
+	}
+
+	public static String radiotherapyIdentifier() {
+		return properties.getProperty("radiotherapy_identifire");
+	}
+
+	public static String lineTherapyStartDate() {
+		return properties.getProperty("line_therapy_start_date");
+	}
+
 }
 
 

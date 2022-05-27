@@ -20,30 +20,38 @@ import util.PropertiesFileManager;
 
 public class ObservationBuilder extends BaseBuilder {
 
-	public static final String NEPHRECTOMY = "nephrectomy";
-	private static final String NEPHRECTOMY_TYPE = "nephrectomy_type";
-	private static final String PARTIAL_NEPHRECTOMY_CODE = "81516001";
-	private static final String RADICA_NEPHRECTOMY_CODE = "116033007";
-	private static final String SYSTEM_SNOMED = "http://snomed.info/sct";
-	private static final String SYSTEM_MEASURE = "http://unitsofmeasure.org";
-	private static final String RADIOTHERAPY_IDENTIFIER = "Internal EHR SerialCode";
+	public static  String NEPHRECTOMY;
+	private static  String NEPHRECTOMY_TYPE;
+	private static  String PARTIAL_NEPHRECTOMY_CODE;
+	private static  String RADICA_NEPHRECTOMY_CODE;
+	private static  String SYSTEM_SNOMED;
+	private static  String SYSTEM_MEASURE;
+	private static  String RADIOTHERAPY_IDENTIFIER;
 	public static String[] dataOfTherapy;
 	public static String[] tumorCharatteristics;
 	public static String[] brainMets; 
 	public static Map<String,String> tumorCharattCode;
 	public static Map<String,String> brainMetsCode;
+	private static  String LINE_THERAPY_START_DATE; 
 	
 	
 	public static void init() {
+		PARTIAL_NEPHRECTOMY_CODE = PropertiesFileManager.getPartialNephrectomyCode();
+		RADICA_NEPHRECTOMY_CODE = PropertiesFileManager.getRadicalNephrctomyCode();
 		dataOfTherapy = PropertiesFileManager.getTherapyStartData();
 		tumorCharatteristics=PropertiesFileManager.getTumorCharatteristicsList();
 		brainMets = PropertiesFileManager.getBrainMetsList();
 		tumorCharattCode = PropertiesFileManager.getTumorCharatteristicsMap();
 		brainMetsCode = PropertiesFileManager.getBrainMetsListMap();
+		NEPHRECTOMY = PropertiesFileManager.getRadicalNephrctomy();
+		NEPHRECTOMY_TYPE = PropertiesFileManager.getRadicalNephrctomyType();
+		SYSTEM_SNOMED = PropertiesFileManager.snomedCode();		
+		SYSTEM_MEASURE = PropertiesFileManager.snomedMeasure();
+		RADIOTHERAPY_IDENTIFIER = PropertiesFileManager.radiotherapyIdentifier();
+		LINE_THERAPY_START_DATE = PropertiesFileManager.lineTherapyStartDate();
 	}
 	
 	
-	private static final String LINE_THERAPY_START_DATE = "line_therapy_start_date";
 	
 	public static Observation getObservationPatient(JSONArray array,String id) { //String type
 		JSONObject recordJson = linearSearch(array,id);
