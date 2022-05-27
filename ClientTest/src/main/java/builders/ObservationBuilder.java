@@ -27,12 +27,14 @@ public class ObservationBuilder extends BaseBuilder {
 	private static  String system_snomed;
 	private static  String system_mesure;
 	private static  String radiotherapy_identifier;
+	private static  String line_therapy_start_date;
 	public static String[] dataOfTherapy;
 	public static String[] tumorCharatteristics;
 	public static String[] brainMets; 
 	public static Map<String,String> tumorCharattCode;
 	public static Map<String,String> brainMetsCode;
-	private static  String line_therapy_start_date; 
+	private static Map<String,String[]> radiotherapy;
+	private static Map<String,String[]> otherLocalTreatement;
 	
 	
 	public static void init() {
@@ -49,6 +51,8 @@ public class ObservationBuilder extends BaseBuilder {
 		system_mesure = PropertiesFileManager.snomedMeasure();
 		radiotherapy_identifier = PropertiesFileManager.radiotherapyIdentifier();
 		line_therapy_start_date = PropertiesFileManager.lineTherapyStartDate();
+		radiotherapy = PropertiesFileManager.getRadiotherapyCode();
+		otherLocalTreatement = PropertiesFileManager.getOtherLocalTreatementOtherCode();
 	}
 	
 	
@@ -202,7 +206,7 @@ public class ObservationBuilder extends BaseBuilder {
 	}
 	
 	
-	//this function will call up
+	//this function will be called up
 	private static List<Observation> builtObservationsRadiotherapy(JSONArray array,String line_terapy, String id){
 
 		JSONArray jarray = getRadiotherapyInstances(array,line_terapy,id);
@@ -274,49 +278,49 @@ public class ObservationBuilder extends BaseBuilder {
 			if(resourceJson.getString("radiotherapy_sites___1").equals("1")) {
 				CodeableConcept codeableConcept_1 = new CodeableConcept();
 				Coding c1 = codeableConcept_1.addCoding();
-				c1.setCode("272673000");
+				c1.setCode(radiotherapy.get("radiotherapy_sites___1")[0]); 
 				c1.setSystem(system_snomed);
-				c1.setDisplay("Bone structure");
+				c1.setDisplay(radiotherapy.get("radiotherapy_sites___1")[1]);
 				liscConcept.add(codeableConcept_1);
 			}
 			if(resourceJson.getString("radiotherapy_sites___2").equals("1")) {
 				CodeableConcept codeableConcept_2 = new CodeableConcept();
 				Coding c2 = codeableConcept_2.addCoding();
-				c2.setCode("39607008");
+				c2.setCode(radiotherapy.get("radiotherapy_sites___2")[0]);
 				c2.setSystem(system_snomed);
-				c2.setDisplay("Lung structure");
+				c2.setDisplay(radiotherapy.get("radiotherapy_sites___2")[1]);
 				liscConcept.add(codeableConcept_2);
 			}
 			if(resourceJson.getString("radiotherapy_sites___3").equals("1")) {
 				CodeableConcept codeableConcept_3 = new CodeableConcept();
 				Coding c3 = codeableConcept_3.addCoding();
-				c3.setCode("12738006");
+				c3.setCode(radiotherapy.get("radiotherapy_sites___3")[0]);
 				c3.setSystem(system_snomed);
-				c3.setDisplay("Brain structure");	
+				c3.setDisplay(radiotherapy.get("radiotherapy_sites___3")[1]);	
 				liscConcept.add(codeableConcept_3);
 			}
 			if(resourceJson.getString("radiotherapy_sites___4").equals("1")) {
 				CodeableConcept codeableConcept_4 = new CodeableConcept();
 				Coding c4 = codeableConcept_4.addCoding();
-				c4.setCode("87784001");
+				c4.setCode(radiotherapy.get("radiotherapy_sites___4")[0]);
 				c4.setSystem(system_snomed);
-				c4.setDisplay("Soft tissues");	
+				c4.setDisplay(radiotherapy.get("radiotherapy_sites___4")[1]);	
 				liscConcept.add(codeableConcept_4);
 			}
 			if(resourceJson.getString("radiotherapy_sites___5").equals("1")) {
 				CodeableConcept codeableConcept_5 = new CodeableConcept();
 				Coding c5 = codeableConcept_5.addCoding();
-				c5.setCode("361351001");
+				c5.setCode(radiotherapy.get("radiotherapy_sites___5")[0]);
 				c5.setSystem(system_snomed);
-				c5.setDisplay("Bone structure");	
+				c5.setDisplay(radiotherapy.get("radiotherapy_sites___5")[1]);	
 				liscConcept.add(codeableConcept_5);
 			}
 			if(resourceJson.getString("radiotherapy_sites___6").equals("1")) {
 				CodeableConcept codeableConcept_6 = new CodeableConcept();
 				Coding c6 = codeableConcept_6.addCoding();
-				c6.setCode("272673000");
+				c6.setCode(radiotherapy.get("radiotherapy_sites___6")[0]);
 				c6.setSystem(system_snomed);
-				c6.setDisplay("Other structure");	
+				c6.setDisplay(radiotherapy.get("radiotherapy_sites___6")[1]);	
 				liscConcept.add(codeableConcept_6);
 			}
 		
@@ -613,25 +617,25 @@ public class ObservationBuilder extends BaseBuilder {
 			if(resourceJson.getString("local_treatment_type___1").equals("1")) {
 				CodeableConcept codeableConcept_1 = new CodeableConcept();
 				Coding c1 = codeableConcept_1.addCoding();
-				c1.setCode("26782000");
+				c1.setCode(otherLocalTreatement.get("local_treatment_type___1")[0]);
 				c1.setSystem(system_snomed);
-				c1.setDisplay("Cryotherapy");
+				c1.setDisplay(otherLocalTreatement.get("local_treatment_type___1")[1]);
 				liscConcept.add(codeableConcept_1);
 			}
 			if(resourceJson.getString("local_treatment_type___2").equals("1")) {
 				CodeableConcept codeableConcept_2 = new CodeableConcept();
 				Coding c2 = codeableConcept_2.addCoding();
-				c2.setCode("433058002");
+				c2.setCode(otherLocalTreatement.get("local_treatment_type___2")[0]);
 				c2.setSystem(system_snomed);
-				c2.setDisplay("Radiofrequency");
+				c2.setDisplay(otherLocalTreatement.get("local_treatment_type___2")[1]);
 				liscConcept.add(codeableConcept_2);
 			}
 			if(resourceJson.getString("local_treatment_type___3").equals("1")) {
 				CodeableConcept codeableConcept_3 = new CodeableConcept();
 				Coding c3 = codeableConcept_3.addCoding();
-				c3.setCode("229569007");
+				c3.setCode(otherLocalTreatement.get("local_treatment_type___3")[0]);
 				c3.setSystem(system_snomed);
-				c3.setDisplay("Thermo ablation");	
+				c3.setDisplay(otherLocalTreatement.get("local_treatment_type___3")[1]);	
 				liscConcept.add(codeableConcept_3);
 			}
 
@@ -729,7 +733,7 @@ public class ObservationBuilder extends BaseBuilder {
 		
 		Observation observation = new Observation();
 		Identifier identifier = observation.addIdentifier();
-		identifier.setValue("Internal EHR SerialCode");
+		identifier.setValue(PropertiesFileManager.radiotherapyIdentifier());
 		observation.setStatus(observation.getStatus().fromCode("final"));
 
 		Coding coding = observation.getCode().addCoding();

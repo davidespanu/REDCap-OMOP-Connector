@@ -142,7 +142,33 @@ public class PropertiesFileManager {
 		return medicationsCode;
 	}
 
+	public static HashMap<String,String[]> getRadiotherapyCode(){
+		HashMap<String,String[]> medicationsCode = new HashMap<String,String[]>();
+		String drugs_not_parsed = properties.getProperty("radiotherapy_sytes");
+		String[] drugs_not_parsed_yet = drugs_not_parsed.split(",");
+		for(int i = 0; i<drugs_not_parsed_yet.length; i++) {
+			String[] drug_parsed = drugs_not_parsed_yet[i].split(":");
+			String control = drug_parsed[0];
+			String[] code_name = {drug_parsed[1],drug_parsed[2]};
+			medicationsCode.put(control, code_name);
+		}
+		return medicationsCode;
+	}
 
+	public static HashMap<String,String[]> getOtherLocalTreatementOtherCode(){
+		HashMap<String,String[]> medicationsCode = new HashMap<String,String[]>();
+		String drugs_not_parsed = properties.getProperty("other_local_treatement");
+		String[] drugs_not_parsed_yet = drugs_not_parsed.split(",");
+		for(int i = 0; i<drugs_not_parsed_yet.length; i++) {
+			String[] drug_parsed = drugs_not_parsed_yet[i].split(":");
+			String control = drug_parsed[0];
+			String[] code_name = {drug_parsed[1],drug_parsed[2]};
+			medicationsCode.put(control, code_name);
+		}
+		return medicationsCode;
+	}
+
+	
 	public static String[] getTherapyStartData(){
 		String observations_not_parsed = properties.getProperty("therapystartobservations");
 		return observations_not_parsed.split(",");
@@ -194,6 +220,7 @@ public class PropertiesFileManager {
 		return tumorCharacteristicCode;
 	}
 
+	
 	public static String getPartialNephrectomyCode() {
 		return properties.getProperty("partial_nephrectomy_code");
 	}
