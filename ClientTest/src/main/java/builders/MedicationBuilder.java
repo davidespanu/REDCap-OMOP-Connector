@@ -20,16 +20,18 @@ import util.PropertiesFileManager;
 
 public class MedicationBuilder extends BaseBuilder{
 	
-	private static final String SYSTEM_RXNORM = "http://www.nlm.nih.gov/research/umls/rxnorm";
-	private static final String SYSTEM_SNOMED = "http://snomed.info/sct";
-	private static String LINE_THERAPY_START_DATE;
+	private static  String system_rxnorm;
+	private static  String system_snomed;
+	private static String line_therapy_start_date;
 	public static String[] lineDrugTheraphy;
 	public static HashMap<String,String[]> drugs;
 	
 	public static void init() {
 		lineDrugTheraphy = PropertiesFileManager.getTherapyDrug();
-		LINE_THERAPY_START_DATE = PropertiesFileManager.getTherapyStartDate();
+		line_therapy_start_date = PropertiesFileManager.getTherapyStartDate();
 		drugs = PropertiesFileManager.getMedicationsCode();
+		system_snomed = PropertiesFileManager.snomedCode();
+		system_rxnorm = PropertiesFileManager.systemRXNORM();
 	}
 	
 	
@@ -79,12 +81,10 @@ public class MedicationBuilder extends BaseBuilder{
 		medicationRequest.setIntent(medicationRequest.getIntent().fromCode("order"));
 
 		if(resourceJson.has(LineTherapyClass)){				
-			//String[] drugs = (resourceJson.getString(LINE_THERAPY_DRUG)).split(Pattern.quote("+"));
 			String drug = resourceJson.getString(LineTherapyClass);
-//			for(int i = 0; i < drugs.length ; i++) {				
 			Coding coding = medicationRequest.getMedicationCodeableConcept().addCoding();
 			coding.setCode(drugs.get(drug)[0]);//TODO: add new code for drugs in file excel
-			coding.setSystem(SYSTEM_RXNORM);
+			coding.setSystem(system_rxnorm);
 			coding.setDisplay(drugs.get(drug)[1]);				
 //			}
 		}else {
@@ -93,18 +93,17 @@ public class MedicationBuilder extends BaseBuilder{
 		
 		medicationRequest.getSubject().setReference("Patient/"+id);
 
-		if(resourceJson.has(LINE_THERAPY_START_DATE)) {
-			// yyyy-mm-dd
-			if(resourceJson.getString(LINE_THERAPY_START_DATE).equals("")) {				
+		if(resourceJson.has(line_therapy_start_date)) {
+			if(resourceJson.getString(line_therapy_start_date).equals("")) {				
 			}else {					
-				String d = resourceJson.getString(LINE_THERAPY_START_DATE);				
+				String d = resourceJson.getString(line_therapy_start_date);				
 				medicationRequest.setAuthoredOnElement(new DateTimeType(d));
 			}
 		}
 		
 		Coding coding = medicationRequest.getPerformerType().addCoding();
 		coding.setCode("309343006");
-		coding.setSystem(SYSTEM_SNOMED);
+		coding.setSystem(system_snomed);
 		coding.setDisplay("Physician");				
 		
 		
@@ -148,24 +147,20 @@ public class MedicationBuilder extends BaseBuilder{
 		
 		if(resourceJson.has(LineTherapyClass)){	
 			String drug = resourceJson.getString(LineTherapyClass);
-//			String[] drugs = (resourceJson.getString(LINE_THERAPY_DRUG)).split(Pattern.quote("+"));
-//			for(int i = 0; i < drugs.length ; i++) {				
 			Coding coding = medicationAdministration.getMedicationCodeableConcept().addCoding();
 			coding.setCode(drugs.get(drug)[0]);
-			coding.setSystem(SYSTEM_RXNORM);
+			coding.setSystem(system_rxnorm);
 			coding.setDisplay(drugs.get(drug)[1]);				
-//			}
 		}else {
 			return null;
 		}
 		
 		medicationAdministration.getSubject().setReference("Patient/"+id);
 
-		if(resourceJson.has(LINE_THERAPY_START_DATE)) {
-			// yyyy-mm-dd
-			if(resourceJson.getString(LINE_THERAPY_START_DATE).equals("")) {				
+		if(resourceJson.has(line_therapy_start_date)) {
+			if(resourceJson.getString(line_therapy_start_date).equals("")) {				
 			}else {					
-				String d = resourceJson.getString(LINE_THERAPY_START_DATE);				
+				String d = resourceJson.getString(line_therapy_start_date);				
 				DateTimeType date = new DateTimeType(d);  
 				medicationAdministration.setEffective(date);
 			}

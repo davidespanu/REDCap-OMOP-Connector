@@ -20,35 +20,35 @@ import util.PropertiesFileManager;
 
 public class ObservationBuilder extends BaseBuilder {
 
-	public static  String NEPHRECTOMY;
-	private static  String NEPHRECTOMY_TYPE;
-	private static  String PARTIAL_NEPHRECTOMY_CODE;
-	private static  String RADICA_NEPHRECTOMY_CODE;
-	private static  String SYSTEM_SNOMED;
-	private static  String SYSTEM_MEASURE;
-	private static  String RADIOTHERAPY_IDENTIFIER;
+	public static  String nephrectomy;
+	private static  String nephrectomy_type;
+	private static  String partial_nephrectomy_code;
+	private static  String radical_nephrectomy_code;
+	private static  String system_snomed;
+	private static  String system_mesure;
+	private static  String radiotherapy_identifier;
 	public static String[] dataOfTherapy;
 	public static String[] tumorCharatteristics;
 	public static String[] brainMets; 
 	public static Map<String,String> tumorCharattCode;
 	public static Map<String,String> brainMetsCode;
-	private static  String LINE_THERAPY_START_DATE; 
+	private static  String line_therapy_start_date; 
 	
 	
 	public static void init() {
-		PARTIAL_NEPHRECTOMY_CODE = PropertiesFileManager.getPartialNephrectomyCode();
-		RADICA_NEPHRECTOMY_CODE = PropertiesFileManager.getRadicalNephrctomyCode();
+		partial_nephrectomy_code = PropertiesFileManager.getPartialNephrectomyCode();
+		radical_nephrectomy_code = PropertiesFileManager.getRadicalNephrctomyCode();
 		dataOfTherapy = PropertiesFileManager.getTherapyStartData();
 		tumorCharatteristics=PropertiesFileManager.getTumorCharatteristicsList();
 		brainMets = PropertiesFileManager.getBrainMetsList();
 		tumorCharattCode = PropertiesFileManager.getTumorCharatteristicsMap();
 		brainMetsCode = PropertiesFileManager.getBrainMetsListMap();
-		NEPHRECTOMY = PropertiesFileManager.getRadicalNephrctomy();
-		NEPHRECTOMY_TYPE = PropertiesFileManager.getRadicalNephrctomyType();
-		SYSTEM_SNOMED = PropertiesFileManager.snomedCode();		
-		SYSTEM_MEASURE = PropertiesFileManager.snomedMeasure();
-		RADIOTHERAPY_IDENTIFIER = PropertiesFileManager.radiotherapyIdentifier();
-		LINE_THERAPY_START_DATE = PropertiesFileManager.lineTherapyStartDate();
+		nephrectomy = PropertiesFileManager.getRadicalNephrctomy();
+		nephrectomy_type = PropertiesFileManager.getRadicalNephrctomyType();
+		system_snomed = PropertiesFileManager.snomedCode();		
+		system_mesure = PropertiesFileManager.snomedMeasure();
+		radiotherapy_identifier = PropertiesFileManager.radiotherapyIdentifier();
+		line_therapy_start_date = PropertiesFileManager.lineTherapyStartDate();
 	}
 	
 	
@@ -89,29 +89,29 @@ public class ObservationBuilder extends BaseBuilder {
 	
 	private static Observation buildObservationNephrectomy(JSONObject resourceJson,String id) {
 		Observation observation = new Observation();
-		if(!resourceJson.has(NEPHRECTOMY) ||
-				(resourceJson.has(NEPHRECTOMY) && resourceJson.getString(NEPHRECTOMY).equals("0"))) {			
+		if(!resourceJson.has(nephrectomy) ||
+				(resourceJson.has(nephrectomy) && resourceJson.getString(nephrectomy).equals("0"))) {			
 			return null;
 		}				
 		observation.setStatus(observation.getStatus().fromCode("final"));
 		
-		if(resourceJson.has(NEPHRECTOMY_TYPE)){
-			if(resourceJson.getString(NEPHRECTOMY_TYPE).equals("1")) {
+		if(resourceJson.has(nephrectomy_type)){
+			if(resourceJson.getString(nephrectomy_type).equals("1")) {
 				Coding coding = observation.getCode().addCoding();
-				coding.setCode(PARTIAL_NEPHRECTOMY_CODE);
-				coding.setSystem(SYSTEM_SNOMED);
+				coding.setCode(partial_nephrectomy_code);
+				coding.setSystem(system_snomed);
 				coding.setDisplay("Partial nephtectomy");
 			}
-			else if(resourceJson.getString(NEPHRECTOMY_TYPE).equals("2")){
+			else if(resourceJson.getString(nephrectomy_type).equals("2")){
 				Coding coding = observation.getCode().addCoding();
-				coding.setCode(RADICA_NEPHRECTOMY_CODE);
-				coding.setSystem(SYSTEM_SNOMED);
+				coding.setCode(radical_nephrectomy_code);
+				coding.setSystem(system_snomed);
 				coding.setDisplay("Radical nephtectomy");
 				
 			}else {
 				Coding coding = observation.getCode().addCoding();
-				coding.setCode(RADICA_NEPHRECTOMY_CODE);
-				coding.setSystem(SYSTEM_SNOMED);
+				coding.setCode(radical_nephrectomy_code);
+				coding.setSystem(system_snomed);
 				coding.setDisplay("Simple nephtectomy");				
 			}
 		}
@@ -162,17 +162,17 @@ public class ObservationBuilder extends BaseBuilder {
 		Coding coding = observation.getCode().addCoding();
 		coding.setCode(PropertiesFileManager.getObservationCode().get(typeObservation)[0]);
 		System.out.println();
-		coding.setSystem(SYSTEM_SNOMED);
+		coding.setSystem(system_snomed);
 		
 		coding.setDisplay(typeObservation);
 		
 		observation.getSubject().setReference("Patient/"+id);
 		
-		if(resourceJson.has(LINE_THERAPY_START_DATE)) {
+		if(resourceJson.has(line_therapy_start_date)) {
 			// yyyy-mm-dd
-			if(resourceJson.getString(LINE_THERAPY_START_DATE).equals("")) {				
+			if(resourceJson.getString(line_therapy_start_date).equals("")) {				
 			}else {					
-				String d = resourceJson.getString(LINE_THERAPY_START_DATE);				
+				String d = resourceJson.getString(line_therapy_start_date);				
 				observation.setEffective(new DateTimeType(d));
 			}
 		}
@@ -182,7 +182,7 @@ public class ObservationBuilder extends BaseBuilder {
 		if(!(resourceJson.getString(typeObservation).equals(""))) {
 		quantity.setValue(Double.parseDouble(resourceJson.getString(typeObservation)));
 		}		
-		quantity.setSystem(SYSTEM_MEASURE);
+		quantity.setSystem(system_mesure);
 		return observation;
 	}
 	
@@ -232,7 +232,7 @@ public class ObservationBuilder extends BaseBuilder {
 		
 		Observation observation = new Observation();
 		Identifier identifier = observation.addIdentifier();
-		identifier.setValue(RADIOTHERAPY_IDENTIFIER);
+		identifier.setValue(radiotherapy_identifier);
 		observation.setStatus(observation.getStatus().fromCode("final"));
 
 		Coding coding = observation.getCode().addCoding();
@@ -244,7 +244,7 @@ public class ObservationBuilder extends BaseBuilder {
 		if(!(resourceJson.getString("radiotherapy_start_date").equals(""))) {
 			
 			Coding codingValeCodabole = observation.getValueCodeableConcept().addCoding();
-			codingValeCodabole.setSystem(SYSTEM_SNOMED);
+			codingValeCodabole.setSystem(system_snomed);
 			codingValeCodabole.setCode("168533005");
 			if(!(resourceJson.getString("radiotherapy_stop_date").equals(""))) {
 				String d = resourceJson.getString("radiotherapy_stop_date");				
@@ -275,7 +275,7 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_1 = new CodeableConcept();
 				Coding c1 = codeableConcept_1.addCoding();
 				c1.setCode("272673000");
-				c1.setSystem(SYSTEM_SNOMED);
+				c1.setSystem(system_snomed);
 				c1.setDisplay("Bone structure");
 				liscConcept.add(codeableConcept_1);
 			}
@@ -283,7 +283,7 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_2 = new CodeableConcept();
 				Coding c2 = codeableConcept_2.addCoding();
 				c2.setCode("39607008");
-				c2.setSystem(SYSTEM_SNOMED);
+				c2.setSystem(system_snomed);
 				c2.setDisplay("Lung structure");
 				liscConcept.add(codeableConcept_2);
 			}
@@ -291,7 +291,7 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_3 = new CodeableConcept();
 				Coding c3 = codeableConcept_3.addCoding();
 				c3.setCode("12738006");
-				c3.setSystem(SYSTEM_SNOMED);
+				c3.setSystem(system_snomed);
 				c3.setDisplay("Brain structure");	
 				liscConcept.add(codeableConcept_3);
 			}
@@ -299,7 +299,7 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_4 = new CodeableConcept();
 				Coding c4 = codeableConcept_4.addCoding();
 				c4.setCode("87784001");
-				c4.setSystem(SYSTEM_SNOMED);
+				c4.setSystem(system_snomed);
 				c4.setDisplay("Soft tissues");	
 				liscConcept.add(codeableConcept_4);
 			}
@@ -307,7 +307,7 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_5 = new CodeableConcept();
 				Coding c5 = codeableConcept_5.addCoding();
 				c5.setCode("361351001");
-				c5.setSystem(SYSTEM_SNOMED);
+				c5.setSystem(system_snomed);
 				c5.setDisplay("Bone structure");	
 				liscConcept.add(codeableConcept_5);
 			}
@@ -315,7 +315,7 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_6 = new CodeableConcept();
 				Coding c6 = codeableConcept_6.addCoding();
 				c6.setCode("272673000");
-				c6.setSystem(SYSTEM_SNOMED);
+				c6.setSystem(system_snomed);
 				c6.setDisplay("Other structure");	
 				liscConcept.add(codeableConcept_6);
 			}
@@ -354,7 +354,7 @@ public class ObservationBuilder extends BaseBuilder {
 	private static Observation   buildObservarionOtherSurgery(JSONObject resourceJson, String id,CodeableConcept codable) {
 		Observation observation = new Observation();
 		Identifier identifier = observation.addIdentifier();
-		identifier.setValue(RADIOTHERAPY_IDENTIFIER); // the identifier is the same of the Radiotherapy one
+		identifier.setValue(radiotherapy_identifier); // the identifier is the same of the Radiotherapy one
 		observation.setStatus(observation.getStatus().fromCode("final"));
 		
 		if(codable == null) {
@@ -389,28 +389,28 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_1 = new CodeableConcept();
 				Coding c1 = codeableConcept_1.addCoding();
 				c1.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___1")[0]);
-				c1.setSystem(SYSTEM_SNOMED);				
+				c1.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_1);
 			}
 			if(resourceJson.getString("target_organ___2").equals("1")) {
 				CodeableConcept codeableConcept_2 = new CodeableConcept();
 				Coding c2 = codeableConcept_2.addCoding();
 				c2.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___2")[0]);
-				c2.setSystem(SYSTEM_SNOMED);				
+				c2.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_2);
 			}
 			if(resourceJson.getString("target_organ___3").equals("1")) {
 				CodeableConcept codeableConcept_3 = new CodeableConcept();
 				Coding c3 = codeableConcept_3.addCoding();
 				c3.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___3")[0]);
-				c3.setSystem(SYSTEM_SNOMED);				
+				c3.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_3);
 			}
 			if(resourceJson.getString("target_organ___4").equals("1")) {
 				CodeableConcept codeableConcept_4 = new CodeableConcept();
 				Coding c4 = codeableConcept_4.addCoding();
 				c4.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___4")[0]);
-				c4.setSystem(SYSTEM_SNOMED);
+				c4.setSystem(system_snomed);
 				
 				liscConcept.add(codeableConcept_4);
 			}
@@ -418,49 +418,49 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_5 = new CodeableConcept();
 				Coding c5 = codeableConcept_5.addCoding();
 				c5.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___5")[0]);
-				c5.setSystem(SYSTEM_SNOMED);				
+				c5.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_5);
 			}
 			if(resourceJson.getString("target_organ___6").equals("1")) {
 				CodeableConcept codeableConcept_6 = new CodeableConcept();
 				Coding c6 = codeableConcept_6.addCoding();
 				c6.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___6")[0]);
-				c6.setSystem(SYSTEM_SNOMED);				
+				c6.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_6);
 			}
 			if(resourceJson.getString("target_organ___7").equals("1")) {
 				CodeableConcept codeableConcept_7 = new CodeableConcept();
 				Coding c7 = codeableConcept_7.addCoding();
 				c7.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___7")[0]);
-				c7.setSystem(SYSTEM_SNOMED);				
+				c7.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_7);
 			}
 			if(resourceJson.getString("target_organ___8").equals("1")) {
 				CodeableConcept codeableConcept_8 = new CodeableConcept();
 				Coding c8 = codeableConcept_8.addCoding();
 				c8.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___8")[0]);
-				c8.setSystem(SYSTEM_SNOMED);				
+				c8.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_8);
 			}
 			if(resourceJson.getString("target_organ___9").equals("1")) {
 				CodeableConcept codeableConcept_9 = new CodeableConcept();
 				Coding c9 = codeableConcept_9.addCoding();
 				c9.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___9")[0]);
-				c9.setSystem(SYSTEM_SNOMED);				
+				c9.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_9);
 			}
 			if(resourceJson.getString("target_organ___10").equals("1")) {
 				CodeableConcept codeableConcept_10 = new CodeableConcept();
 				Coding c10 = codeableConcept_10.addCoding();
 				c10.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___10")[0]);
-				c10.setSystem(SYSTEM_SNOMED);				
+				c10.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_10);
 			}
 			if(resourceJson.getString("target_organ___11").equals("1")) {
 				CodeableConcept codeableConcept_11 = new CodeableConcept();
 				Coding c11 = codeableConcept_11.addCoding();
 				c11.setCode(PropertiesFileManager.getOtherSurgeryCode().get("target_organ___11")[0]);
-				c11.setSystem(SYSTEM_SNOMED);				
+				c11.setSystem(system_snomed);				
 				liscConcept.add(codeableConcept_11);
 			}
 		
@@ -498,7 +498,7 @@ public class ObservationBuilder extends BaseBuilder {
 	private static Observation   buildObservarionOtherLocalTreatement(JSONObject resourceJson, String id,CodeableConcept code,CodeableConcept bodySite) {
 		Observation observation = new Observation();
 		Identifier identifier = observation.addIdentifier();
-		identifier.setValue(RADIOTHERAPY_IDENTIFIER); // the identifier is the same of the Radiotherapy one
+		identifier.setValue(radiotherapy_identifier); // the identifier is the same of the Radiotherapy one
 		observation.setStatus(observation.getStatus().fromCode("final"));
 		
 		if(code == null) {
@@ -540,28 +540,28 @@ public class ObservationBuilder extends BaseBuilder {
 			CodeableConcept codeableConcept_1 = new CodeableConcept();
 			Coding c1 = codeableConcept_1.addCoding();
 			c1.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___1")[0]);
-			c1.setSystem(SYSTEM_SNOMED);				
+			c1.setSystem(system_snomed);				
 			liscConcept.add(codeableConcept_1);
 		}
 		if(resourceJson.getString("target_organ_local_tr___2").equals("1")) {
 			CodeableConcept codeableConcept_2 = new CodeableConcept();
 			Coding c2 = codeableConcept_2.addCoding();
 			c2.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___2")[0]);
-			c2.setSystem(SYSTEM_SNOMED);				
+			c2.setSystem(system_snomed);				
 			liscConcept.add(codeableConcept_2);
 		}
 		if(resourceJson.getString("target_organ_local_tr___3").equals("1")) {
 			CodeableConcept codeableConcept_3 = new CodeableConcept();
 			Coding c3 = codeableConcept_3.addCoding();
 			c3.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___3")[0]);
-			c3.setSystem(SYSTEM_SNOMED);				
+			c3.setSystem(system_snomed);				
 			liscConcept.add(codeableConcept_3);
 		}
 		if(resourceJson.getString("target_organ_local_tr___5").equals("1")) {
 			CodeableConcept codeableConcept_4 = new CodeableConcept();
 			Coding c4 = codeableConcept_4.addCoding();
 			c4.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___5")[0]);
-			c4.setSystem(SYSTEM_SNOMED);
+			c4.setSystem(system_snomed);
 			
 			liscConcept.add(codeableConcept_4);
 		}
@@ -569,35 +569,35 @@ public class ObservationBuilder extends BaseBuilder {
 			CodeableConcept codeableConcept_5 = new CodeableConcept();
 			Coding c5 = codeableConcept_5.addCoding();
 			c5.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___6")[0]);
-			c5.setSystem(SYSTEM_SNOMED);				
+			c5.setSystem(system_snomed);				
 			liscConcept.add(codeableConcept_5);
 		}
 		if(resourceJson.getString("target_organ_local_tr___7").equals("1")) {
 			CodeableConcept codeableConcept_6 = new CodeableConcept();
 			Coding c6 = codeableConcept_6.addCoding();
 			c6.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___7")[0]);
-			c6.setSystem(SYSTEM_SNOMED);				
+			c6.setSystem(system_snomed);				
 			liscConcept.add(codeableConcept_6);
 		}
 		if(resourceJson.getString("target_organ_local_tr___8").equals("1")) {
 			CodeableConcept codeableConcept_7 = new CodeableConcept();
 			Coding c7 = codeableConcept_7.addCoding();
 			c7.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___8")[0]);
-			c7.setSystem(SYSTEM_SNOMED);				
+			c7.setSystem(system_snomed);				
 			liscConcept.add(codeableConcept_7);
 		}
 		if(resourceJson.getString("target_organ_local_tr___10").equals("1")) {
 			CodeableConcept codeableConcept_8 = new CodeableConcept();
 			Coding c8 = codeableConcept_8.addCoding();
 			c8.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___10")[0]);
-			c8.setSystem(SYSTEM_SNOMED);				
+			c8.setSystem(system_snomed);				
 			liscConcept.add(codeableConcept_8);
 		}
 		if(resourceJson.getString("target_organ_local_tr___11").equals("1")) {
 			CodeableConcept codeableConcept_9 = new CodeableConcept();
 			Coding c9 = codeableConcept_9.addCoding();
 			c9.setCode(PropertiesFileManager.getOtherLocalTreatemetCode().get("target_organ_local_tr___11")[0]);
-			c9.setSystem(SYSTEM_SNOMED);				
+			c9.setSystem(system_snomed);				
 			liscConcept.add(codeableConcept_9);
 		}
 	
@@ -614,7 +614,7 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_1 = new CodeableConcept();
 				Coding c1 = codeableConcept_1.addCoding();
 				c1.setCode("26782000");
-				c1.setSystem(SYSTEM_SNOMED);
+				c1.setSystem(system_snomed);
 				c1.setDisplay("Cryotherapy");
 				liscConcept.add(codeableConcept_1);
 			}
@@ -622,7 +622,7 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_2 = new CodeableConcept();
 				Coding c2 = codeableConcept_2.addCoding();
 				c2.setCode("433058002");
-				c2.setSystem(SYSTEM_SNOMED);
+				c2.setSystem(system_snomed);
 				c2.setDisplay("Radiofrequency");
 				liscConcept.add(codeableConcept_2);
 			}
@@ -630,7 +630,7 @@ public class ObservationBuilder extends BaseBuilder {
 				CodeableConcept codeableConcept_3 = new CodeableConcept();
 				Coding c3 = codeableConcept_3.addCoding();
 				c3.setCode("229569007");
-				c3.setSystem(SYSTEM_SNOMED);
+				c3.setSystem(system_snomed);
 				c3.setDisplay("Thermo ablation");	
 				liscConcept.add(codeableConcept_3);
 			}
@@ -688,7 +688,7 @@ public class ObservationBuilder extends BaseBuilder {
 
 			
 			Coding codingValeCodabole = observation.getValueCodeableConcept().addCoding();
-			codingValeCodabole.setSystem(SYSTEM_SNOMED);
+			codingValeCodabole.setSystem(system_snomed);
 			codingValeCodabole.setCode("52101004");
 			codingValeCodabole.setDisplay("Present");
 			}
@@ -746,14 +746,14 @@ public class ObservationBuilder extends BaseBuilder {
 		if((resourceJson.getString(characteristic).equals("1"))) {
 
 			Coding codingValeCodabole = observation.getValueCodeableConcept().addCoding();
-			codingValeCodabole.setSystem(SYSTEM_SNOMED);
+			codingValeCodabole.setSystem(system_snomed);
 			codingValeCodabole.setCode("52101004");
 			codingValeCodabole.setDisplay("Present");
 
 		}else {
 
 			Coding codingValeCodabole = observation.getValueCodeableConcept().addCoding();
-			codingValeCodabole.setSystem(SYSTEM_SNOMED);
+			codingValeCodabole.setSystem(system_snomed);
 			codingValeCodabole.setCode("52101004");
 			codingValeCodabole.setDisplay("Absent");
 			

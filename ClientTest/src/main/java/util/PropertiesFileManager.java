@@ -226,6 +226,10 @@ public class PropertiesFileManager {
 		return properties.getProperty("line_therapy_start_date");
 	}
 
+	public static String systemRXNORM() {
+		return properties.getProperty("system_rxnorm");
+	}
+
 }
 
 
