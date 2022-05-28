@@ -209,6 +209,36 @@ public class PropertiesFileManager {
 		return new_s;
 	}
 
+	public static String[] getRadiotherapyList(){
+		String observations_not_parsed = properties.getProperty("radiotherapy_list");
+		String[] s = observations_not_parsed.split(",");
+		String[] new_s = new String[s.length];
+		for(int i = 0; i<new_s.length; i++) {
+			String[] name_code = s[i].split(":");
+			new_s[i]=name_code[0];
+		}
+		return new_s;
+	}
+
+	public static String[] getOtherLocalTreatementList(){
+		String observations_not_parsed = properties.getProperty("other_local_treatement_list");
+		String[] s = observations_not_parsed.split(",");
+		return s;
+	}
+
+	public static String[] getOtherLocalTreatementtype(){
+		String observations_not_parsed = properties.getProperty("local_treatement_type");
+		String[] s = observations_not_parsed.split(",");
+		return s;
+	}
+
+	public static String[] getOtherSurgeryList(){
+		String observations_not_parsed = properties.getProperty("other_surgery_list");
+		String[] s = observations_not_parsed.split(",");
+		return s;
+	}
+
+	
 	public static HashMap<String,String> getBrainMetsListMap(){
 		String observations_not_parsed = properties.getProperty("observationbrainmets");
 		HashMap<String,String> tumorCharacteristicCode = new HashMap<String,String>();
